@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Progetto | Rete Universitaria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans:['Inter', 'sans-serif'] },
+                    colors: { brand: { cyan: '#22d3ee', violet: '#a78bfa', dark: '#020617' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.05; pointer-events: none; z-index: 99;
+        }
+        .spotlight-card {
+            position: relative; background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        code { font-family: 'ui-monospace', monospace; color: #22d3ee; }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-300 antialiased overflow-x-hidden">
+
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-[-5%] left-[-5%] w-[800px] h-[800px] bg-brand-cyan/5 rounded-full blur-[150px]"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-brand-dark/60 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-8 h-20 flex justify-between items-center">
+            <a href="home.html" class="text-xs font-bold tracking-[0.2em] uppercase hover:text-brand-cyan transition-all">← Torna alla Home</a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 pt-40 pb-20 px-8">
+        <div class="max-w-6xl mx-auto">
+            
+            <header class="mb-24 reveal">
+                <h1 class="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter">Rete <span class="text-brand-cyan">Campus.</span></h1>
+                <div class="w-full rounded-[3rem] border border-white/10 bg-white/5 overflow-hidden shadow-2xl">
+                    <img src="foto/topologia_completa.png" alt="Topologia di Rete Completa" class="w-full h-auto object-cover opacity-90">
+                </div>
+            </header>
+
+            <section class="mb-32 reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1 rounded-[2rem] border border-white/10 overflow-hidden shadow-xl bg-white/5">
+                        <img src="foto/EtherChannel_vlan.png" alt="Dettaglio Router 0" class="w-full h-auto hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                            <span class="text-brand-cyan">01.</span> Router 0: Cuore della Rete Ovest
+                        </h2>
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4">
+                            <p>
+                                Il <strong>Router 0</strong> gestisce la porzione sinistra della topologia. È un nodo critico perché possiede il maggior numero di interfacce attive, garantendo la connessione locale e la ridondanza geografica.
+                            </p>
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">VLAN 10 & 20:</span> 
+                                    <span>Suddivisione dei PC in gruppi virtuali per isolare i reparti, evitando conflitti di dati e loop.</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">Default Gateway:</span> 
+                                    <span>Le interfacce Fa0/0 e Fa1/0 collegano i PC locali agendo come uscita per le reti 192.168.1.x e 2.x.</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">Ponti Seriali:</span> 
+                                    <span>I link Se2/0 (200.100.20.1) e Se3/0 (200.100.40.1) permettono il dialogo diretto con gli altri uffici.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
+                            <pre class="text-cyan-400/90 leading-tight"><code>interface Serial2/0
+ ip address 200.100.20.1 255.255.255.0
+!
+interface Serial3/0
+ ip address 200.100.40.1 255.255.255.0</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-32 reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                            <span class="text-brand-cyan">02.</span> Router 1: Nodo Centrale e Sicurezza
+                        </h2>
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4">
+                            <p>
+                                Il <strong>Router 1</strong> funge da centro nevralgico per i servizi di sicurezza. Coordina l'accesso alla rete tramite il server RADIUS e gestisce diverse sottoreti locali per PC e amministrazione.
+                            </p>
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">Interfaccia Fa1/1:</span> 
+                                    <span>Punto di interconnessione Campus configurato con IP <strong>192.168.7.3</strong>.</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">Server RADIUS:</span> 
+                                    <span>Posizionato sull'interfaccia Fa0/5 dello Switch 3, gestisce l'autenticazione centralizzata AAA.</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">PC ADMIN (PC12):</span> 
+                                    <span>Configurato sulla porta Fa0/7 per la manutenzione dell'infrastruttura.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
+                            <div class="text-brand-violet mb-2 text-xs uppercase tracking-widest">// Configurazione Router 1</div>
+                            <pre class="text-cyan-400/90 leading-tight"><code>interface FastEthernet1/1
+ ip address 192.168.7.3 255.255.255.0
+!
+interface Serial2/2
+ ip address 200.100.20.2 255.255.255.0</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col gap-8">
+                        <div class="rounded-[2rem] border border-white/10 overflow-hidden shadow-xl bg-white/5">
+                            <img src="foto/Router1.png" alt="Configurazione Interfacce Router 1" class="w-full h-auto hover:scale-[1.02] transition-transform duration-500">
+                        </div>
+                        <div class="rounded-[2rem] border border-white/10 overflow-hidden shadow-xl bg-white/5">
+                            <img src="foto/Radius_AAA.png" alt="Configurazione Servizi RADIUS AAA" class="w-full h-auto hover:scale-[1.02] transition-transform duration-500">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-32 reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1 rounded-[2rem] border border-white/10 overflow-hidden shadow-xl bg-white/5">
+                        <img src="foto/Router2.png" alt="Router 2: Wireless e DHCP" class="w-full h-auto hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                            <span class="text-brand-cyan">03.</span> Router 2: Mobilità e DHCP
+                        </h2>
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4">
+                            <p>
+                                Il <strong>Router 2</strong> gestisce l'infrastruttura wireless e l'assegnazione dinamica degli indirizzi tramite DHCP Relay.
+                            </p>
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">Fa0/0 (LAN):</span> 
+                                    <span>IP 192.168.4.1 con IP-Helper puntato al server 192.168.4.10.</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="text-brand-cyan font-bold">Fa1/1 (Interconnessione):</span> 
+                                    <span>Connessione alla dorsale 7.x con IP <strong>192.168.7.2</strong>.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
+                            <div class="text-brand-violet mb-2 text-xs uppercase tracking-widest">// CLI Router 2</div>
+                            <pre class="text-cyan-400/90 leading-tight"><code>interface FastEthernet1/1
+ ip address 192.168.7.2 255.255.255.0
+!
+interface Serial2/0
+ ip address 200.100.30.2 255.255.255.0</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-32 reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                            <span class="text-brand-cyan">04.</span> Politiche di Sicurezza & Firewall
+                        </h2>
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-6">
+                            <div>
+                                <h3 class="text-white font-semibold mb-2 text-lg">Controllo Accessi e NAT</h3>
+                                <p class="text-sm mb-4">La configurazione utilizza il NAT dinamico per permettere alle reti interne (192.168.1.0 - 4.0) e alla rete di interconnessione (192.168.7.0) di navigare verso l'esterno.</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li class="flex gap-2">
+                                        <span class="text-brand-cyan font-bold">•</span>
+                                        <span><strong>Protezione Entrante:</strong> Applicato un criterio "Deny All" di default. L'accesso è consentito solo per traffico HTTP/HTTPS verso l'host pubblico 192.168.6.10.</span>
+                                    </li>
+                                    <li class="flex gap-2">
+                                        <span class="text-brand-cyan font-bold">•</span>
+                                        <span><strong>Restrizioni Uscita:</strong> Bloccati esplicitamente i protocolli FTP e TFTP per prevenire esfiltrazioni; ammesso il traffico ICMP e IP generico.</span>
+                                    </li>
+                                    <li class="flex gap-2">
+                                        <span class="text-brand-cyan font-bold">•</span>
+                                        <span><strong>Routing Strategico:</strong> Rotte statiche configurate per dirigere il traffico verso i gateway 192.168.5.1 e 192.168.6.1.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
+                            <div class="text-brand-violet mb-2 text-xs uppercase tracking-widest">// Configurazione Gigabit Ethernet</div>
+                            <pre class="text-cyan-400/90 leading-tight"><code>interface GigabitEthernet1/1
+ ip address 192.168.6.2 255.255.255.0
+ ip nat outside
+!
+interface GigabitEthernet1/2
+ ip address 192.168.7.1 255.255.255.0
+ ip nat inside</code></pre>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-8">
+                        <div class="rounded-[2rem] border border-white/10 overflow-hidden shadow-xl bg-white/5">
+                            <img src="foto/Firewall.png" alt="Configurazione Firewall" class="w-full h-auto">
+                        </div>
+                        <div class="rounded-[2rem] border border-white/10 overflow-hidden shadow-xl bg-white/5 p-4">
+                             <img src="foto/configurazione_firewall.png" alt="CLI Firewall Completa" class="w-full h-auto rounded-xl opacity-80">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="py-20 border-t border-white/5 text-center">
+        <p class="text-[10px] font-black tracking-[0.5em] text-slate-600 uppercase">© 2026 Luciano Scanzano</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add("active");
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
