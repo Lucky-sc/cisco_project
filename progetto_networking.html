@@ -62,33 +62,25 @@
                     </div>
                     <div class="order-1 lg:order-2">
                         <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
-                            <span class="text-brand-cyan">01.</span> Router 0: Cuore della Rete Ovest
+                            <span class="text-brand-cyan">01.</span> Infrastruttura Core Ovest
                         </h2>
-                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4">
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4 text-justify">
                             <p>
-                                Il <strong>Router 0</strong> gestisce la porzione sinistra della topologia. È un nodo critico perché possiede il maggior numero di interfacce attive, garantendo la connessione locale e la ridondanza geografica.
+                                Il <strong>Router 0</strong> rappresenta il pilastro fondamentale per la gestione del traffico della zona Ovest del Campus. La sua configurazione è stata progettata per garantire la massima efficienza nell'instradamento dei pacchetti tra le sottoreti locali e la dorsale principale.
                             </p>
-                            <ul class="space-y-3 text-sm">
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">VLAN 10 & 20:</span> 
-                                    <span>Suddivisione dei PC in gruppi virtuali per isolare i reparti, evitando conflitti di dati e loop.</span>
+                            <p>
+                                Oltre alla semplice funzione di routing, questo dispositivo agisce come primo baluardo per la segmentazione del traffico. Grazie all'implementazione di <strong>VLAN (Virtual Local Area Network)</strong>, è possibile isolare logicamente i domini di broadcast, migliorando sensibilmente la sicurezza e riducendo la congestione causata dal traffico non necessario.
+                            </p>
+                            <ul class="space-y-4 text-sm mt-6">
+                                <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <span class="text-brand-cyan font-bold">Gerarchia degli Indirizzi:</span> 
+                                    <span>Assegnazione statica e dinamica per le reti 192.168.1.x e 192.168.2.x, garantendo che ogni dipartimento abbia un proprio range dedicato e monitorabile.</span>
                                 </li>
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">Default Gateway:</span> 
-                                    <span>Le interfacce Fa0/0 e Fa1/0 collegano i PC locali agendo come uscita per le reti 192.168.1.x e 2.x.</span>
-                                </li>
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">Ponti Seriali:</span> 
-                                    <span>I link Se2/0 (200.100.20.1) e Se3/0 (200.100.40.1) permettono il dialogo diretto con gli altri uffici.</span>
+                                <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <span class="text-brand-cyan font-bold">Ridondanza Seriale:</span> 
+                                    <span>L'uso di link Seriali (Se2/0 e Se3/0) permette una comunicazione punto-punto resiliente verso le altre sedi, mantenendo la connettività anche in caso di guasto ai link Ethernet.</span>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
-                            <pre class="text-cyan-400/90 leading-tight"><code>interface Serial2/0
- ip address 200.100.20.1 255.255.255.0
-!
-interface Serial3/0
- ip address 200.100.40.1 255.255.255.0</code></pre>
                         </div>
                     </div>
                 </div>
@@ -98,34 +90,25 @@ interface Serial3/0
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     <div>
                         <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
-                            <span class="text-brand-cyan">02.</span> Router 1: Nodo Centrale e Sicurezza
+                            <span class="text-brand-cyan">02.</span> Sicurezza Centralizzata & AAA
                         </h2>
-                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4">
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4 text-justify">
                             <p>
-                                Il <strong>Router 1</strong> funge da centro nevralgico per i servizi di sicurezza. Coordina l'accesso alla rete tramite il server RADIUS e gestisce diverse sottoreti locali per PC e amministrazione.
+                                Il <strong>Router 1</strong> funge da centro nevralgico per l'integrità della rete. Qui risiede la logica di autenticazione che protegge l'accesso alle risorse critiche del campus tramite policy rigorose.
                             </p>
-                            <ul class="space-y-3 text-sm">
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">Interfaccia Fa1/1:</span> 
-                                    <span>Punto di interconnessione Campus configurato con IP <strong>192.168.7.3</strong>.</span>
+                            <p>
+                                Il cuore di questa sezione è l'integrazione con il protocollo <strong>RADIUS</strong>. Attraverso il server dedicato, la rete implementa il framework <strong>AAA (Authentication, Authorization, and Accounting)</strong>. Ogni tentativo di accesso deve essere verificato contro un database centrale, tracciando ogni operazione effettuata per una sicurezza di livello enterprise.
+                            </p>
+                            <ul class="space-y-4 text-sm mt-6">
+                                <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <span class="text-brand-cyan font-bold">Gestione Admin:</span> 
+                                    <span>Il PC12 (Admin) è attestato su una porta dedicata, garantendo un canale di gestione protetto per la manutenzione senza interferire con il traffico degli utenti.</span>
                                 </li>
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">Server RADIUS:</span> 
-                                    <span>Posizionato sull'interfaccia Fa0/5 dello Switch 3, gestisce l'autenticazione centralizzata AAA.</span>
-                                </li>
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">PC ADMIN (PC12):</span> 
-                                    <span>Configurato sulla porta Fa0/7 per la manutenzione dell'infrastruttura.</span>
+                                <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <span class="text-brand-cyan font-bold">Integrità Dati:</span> 
+                                    <span>Il nodo gestisce l'interconnessione Campus (192.168.7.3) assicurando che i dati sensibili di autenticazione viaggino con priorità e protezione elevata attraverso la rete.</span>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
-                            <div class="text-brand-violet mb-2 text-xs uppercase tracking-widest">// Configurazione Router 1</div>
-                            <pre class="text-cyan-400/90 leading-tight"><code>interface FastEthernet1/1
- ip address 192.168.7.3 255.255.255.0
-!
-interface Serial2/2
- ip address 200.100.20.2 255.255.255.0</code></pre>
                         </div>
                     </div>
                     
@@ -147,30 +130,25 @@ interface Serial2/2
                     </div>
                     <div class="order-1 lg:order-2">
                         <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
-                            <span class="text-brand-cyan">03.</span> Router 2: Mobilità e DHCP
+                            <span class="text-brand-cyan">03.</span> Edge Computing & Mobilità
                         </h2>
-                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4">
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-4 text-justify">
                             <p>
-                                Il <strong>Router 2</strong> gestisce l'infrastruttura wireless e l'assegnazione dinamica degli indirizzi tramite DHCP Relay.
+                                Il <strong>Router 2</strong> è orientato all'utente finale e alla flessibilità. In un ambiente universitario moderno, la mobilità è essenziale: questo nodo gestisce l'intera infrastruttura <strong>Wireless</strong> e l'erogazione dei servizi IP.
                             </p>
-                            <ul class="space-y-3 text-sm">
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">Fa0/0 (LAN):</span> 
-                                    <span>IP 192.168.4.1 con IP-Helper puntato al server 192.168.4.10.</span>
+                            <p>
+                                L'elemento tecnico distintivo qui è il <strong>DHCP Relay (IP-Helper Address)</strong>. Le richieste dei client vengono inoltrate in modo intelligente a un server dedicato (192.168.4.10). Questo permette una gestione centralizzata dei log e dei rilasci (lease), semplificando drasticamente il troubleshooting e la scalabilità della rete.
+                            </p>
+                            <ul class="space-y-4 text-sm mt-6">
+                                <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <span class="text-brand-cyan font-bold">Ottimizzazione Wireless:</span> 
+                                    <span>Configurazione di Access Point per coprire aree comuni, garantendo un roaming fluido tra le diverse zone dei dipartimenti.</span>
                                 </li>
-                                <li class="flex gap-3">
-                                    <span class="text-brand-cyan font-bold">Fa1/1 (Interconnessione):</span> 
-                                    <span>Connessione alla dorsale 7.x con IP <strong>192.168.7.2</strong>.</span>
+                                <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <span class="text-brand-cyan font-bold">Interconnessione:</span> 
+                                    <span>Utilizzo del link 192.168.7.2 per raccordarsi alla backbone centrale, bilanciando il carico di traffico generato dai dispositivi mobili.</span>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
-                            <div class="text-brand-violet mb-2 text-xs uppercase tracking-widest">// CLI Router 2</div>
-                            <pre class="text-cyan-400/90 leading-tight"><code>interface FastEthernet1/1
- ip address 192.168.7.2 255.255.255.0
-!
-interface Serial2/0
- ip address 200.100.30.2 255.255.255.0</code></pre>
                         </div>
                     </div>
                 </div>
@@ -180,37 +158,28 @@ interface Serial2/0
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     <div>
                         <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
-                            <span class="text-brand-cyan">04.</span> Politiche di Sicurezza & Firewall
+                            <span class="text-brand-cyan">04.</span> Deep Packet Inspection & NAT
                         </h2>
-                        <div class="text-slate-400 leading-relaxed mb-6 space-y-6">
+                        <div class="text-slate-400 leading-relaxed mb-6 space-y-6 text-justify">
                             <div>
-                                <h3 class="text-white font-semibold mb-2 text-lg">Controllo Accessi e NAT</h3>
-                                <p class="text-sm mb-4">La configurazione utilizza il NAT dinamico per permettere alle reti interne (192.168.1.0 - 4.0) e alla rete di interconnessione (192.168.7.0) di navigare verso l'esterno.</p>
-                                <ul class="space-y-3 text-sm">
-                                    <li class="flex gap-2">
-                                        <span class="text-brand-cyan font-bold">•</span>
-                                        <span><strong>Protezione Entrante:</strong> Applicato un criterio "Deny All" di default. L'accesso è consentito solo per traffico HTTP/HTTPS verso l'host pubblico 192.168.6.10.</span>
+                                <h3 class="text-white font-semibold mb-3 text-lg">Sicurezza Perimetrale Avanzata</h3>
+                                <p class="text-sm mb-4">
+                                    La sicurezza della rete Campus è affidata a una configurazione rigorosa del <strong>Firewall</strong>, che opera con policy di ispezione profonda. La strategia applicata si basa sul principio del "Privilegio Minimo": tutto ciò che non è esplicitamente permesso viene bloccato.
+                                </p>
+                                <p class="text-sm mb-4">
+                                    Il <strong>NAT Dinamico</strong> permette a numerosi dispositivi interni di navigare utilizzando un set limitato di IP pubblici, rendendo la struttura reale della rete invisibile dall'esterno e mitigando attacchi diretti agli host.
+                                </p>
+                                <ul class="space-y-4 text-sm mt-6">
+                                    <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
+                                        <span class="text-brand-cyan font-bold">Filtro Entrante:</span> 
+                                        <span>Protezione totale contro scansioni. Solo il traffico Web certificato (HTTP/HTTPS) è instradato verso il server pubblico (192.168.6.10).</span>
                                     </li>
-                                    <li class="flex gap-2">
-                                        <span class="text-brand-cyan font-bold">•</span>
-                                        <span><strong>Restrizioni Uscita:</strong> Bloccati esplicitamente i protocolli FTP e TFTP per prevenire esfiltrazioni; ammesso il traffico ICMP e IP generico.</span>
-                                    </li>
-                                    <li class="flex gap-2">
-                                        <span class="text-brand-cyan font-bold">•</span>
-                                        <span><strong>Routing Strategico:</strong> Rotte statiche configurate per dirigere il traffico verso i gateway 192.168.5.1 e 192.168.6.1.</span>
+                                    <li class="flex gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
+                                        <span class="text-brand-cyan font-bold">Filtro Uscita:</span> 
+                                        <span>Prevenzione della perdita di dati tramite il blocco dei protocolli FTP/TFTP, forzando l'utilizzo di canali crittografati per il trasferimento file.</span>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="bg-black/40 rounded-2xl p-6 border border-white/5 text-sm font-mono">
-                            <div class="text-brand-violet mb-2 text-xs uppercase tracking-widest">// Configurazione Gigabit Ethernet</div>
-                            <pre class="text-cyan-400/90 leading-tight"><code>interface GigabitEthernet1/1
- ip address 192.168.6.2 255.255.255.0
- ip nat outside
-!
-interface GigabitEthernet1/2
- ip address 192.168.7.1 255.255.255.0
- ip nat inside</code></pre>
                         </div>
                     </div>
                     <div class="flex flex-col gap-8">
